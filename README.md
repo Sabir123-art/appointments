@@ -27,6 +27,21 @@ A web application that allows students to book appointments with counselors. Cou
 - dotenv
 
 ## 📁 Start
+clone: git clone https://github.com/UserName/appointments.git
+cd ./appointments
+npm i/install
+npm start
+visit localhost:3000
+
+## Test
+student--
+email: azzam@gmail.com
+pass:222
+
+Counselor--
+email: cou@gmail.com
+pass: 111
+
 
 
 
