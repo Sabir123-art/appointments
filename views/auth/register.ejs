@@ -1,0 +1,93 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <% if (error_msg) { %>
+        <div class="alert alert-danger"><%= error_msg %></div>
+      <% } %>
+      <% if (success_msg) { %>
+        <div class="alert alert-success"><%= success_msg %></div>
+      <% } %>
+
+      <div class="card shadow-sm">
+        <div class="card-header text-center">
+          <h4>Register as <%= role === 'student' ? 'Student' : 'Counselor' %></h4>
+        </div>
+        <div class="card-body">
+          <form action="/auth/register/<%= role %>" method="POST">
+            <div class="mb-3">
+              <label for="name" class="form-label">Full Name</label>
+              <input type="text" class="form-control" id="name" name="name" placeholder="Enter full name" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="email" class="form-label">Email Address</label>
+              <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="confirmPassword" class="form-label">Confirm Password</label>
+              <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm password" required>
+            </div>
+
+            <% if (role === 'student') { %>
+              <div class="mb-3">
+                <label for="studentId" class="form-label">Student ID</label>
+                <input type="text" class="form-control" id="studentId" name="studentId" placeholder="Enter student ID" required>
+              </div>
+
+              <div class="mb-3">
+                <label for="department" class="form-label">Department</label>
+                <input type="text" class="form-control" id="department" name="department" placeholder="Enter department" required>
+              </div>
+
+              <div class="mb-3">
+                <label for="year" class="form-label">Year</label>
+                <input type="number" class="form-control" id="year" name="year" min="1" max="5" placeholder="Enter year (1-5)" required>
+              </div>
+
+            <% } else { %>
+              <div class="mb-3">
+                <label for="specialization" class="form-label">Specialization</label>
+                <input type="text" class="form-control" id="specialization" name="specialization" placeholder="Enter specialization" required>
+              </div>
+
+              <div class="mb-3">
+                <label for="bio" class="form-label">Bio</label>
+                <textarea class="form-control" id="bio" name="bio" rows="3" placeholder="Short bio" required></textarea>
+              </div>
+
+              <div class="mb-3">
+                <label for="availableDays" class="form-label">Available Days</label>
+                <input type="text" class="form-control" id="availableDays" name="availableDays" placeholder="e.g. Monday,Wednesday,Friday" required>
+                <div class="form-text">Separate days with commas</div>
+              </div>
+
+              <div class="mb-3">
+                <label for="availableHours" class="form-label">Available Hours</label>
+                <input type="text" class="form-control" id="availableHours" name="availableHours" placeholder="e.g. 9:00 AM,11:00 AM,2:00 PM" required>
+                <div class="form-text">Separate hours with commas</div>
+              </div>
+            <% } %>
+
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-primary">Register</button>
+            </div>
+          </form>
+
+          <div class="mt-3 text-center">
+            <p>Already have an account? <a href="/auth/login">Login here</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

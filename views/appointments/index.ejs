@@ -1,0 +1,67 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-5">
+  <% if (typeof error_msg !== 'undefined') { %>
+    <div class="alert alert-danger"><%= error_msg %></div>
+  <% } %>
+  <% if (typeof success_msg !== 'undefined') { %>
+    <div class="alert alert-success"><%= success_msg %></div>
+  <% } %>
+
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>My Appointments</h2>
+    <a href="/appointments/book" class="btn btn-primary">Book New Appointment</a>
+  </div>
+  
+  <% if (appointments && appointments.length > 0) { %>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>Counselor</th>
+            <th>Specialization</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% appointments.forEach(appointment => { 
+               const counselor = appointment.counselor_id;
+               const user = counselor?.user;
+          %>
+            <tr>
+              <td><%= user?.name || 'N/A' %></td>
+              <td><%= counselor?.specialization || 'N/A' %></td>
+              <td><%= new Date(appointment.date).toLocaleDateString() %></td>
+              <td><%= new Date(appointment.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) %></td>
+              <td>
+                <span class="badge bg-<%= 
+                  appointment.status === 'confirmed' ? 'success' : 
+                  appointment.status === 'pending' ? 'warning' : 
+                  appointment.status === 'cancelled' ? 'danger' : 'secondary' 
+                %> text-capitalize">
+                  <%= appointment.status %>
+                </span>
+              </td>
+              <td>
+                <% if (appointment.status === 'pending') { %>
+                  <form action="/appointments/<%= appointment._id %>/cancel" method="POST" class="d-inline">
+                    <button type="submit" class="btn btn-sm btn-danger">Cancel</button>
+                  </form>
+                <% } else { %>
+                  <span class="text-muted small">No actions</span>
+                <% } %>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  <% } else { %>
+    <div class="alert alert-info">You don't have any appointments yet.</div>
+  <% } %>
+</div>
+
+<%- include('../partials/footer') %>

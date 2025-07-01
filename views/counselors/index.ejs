@@ -1,0 +1,40 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-5">
+  <h2 class="mb-4 text-center">Available Counselors</h2>
+  
+  <% if (counselors && counselors.length > 0) { %>
+    <div class="row">
+      <% counselors.forEach(counselor => { %>
+        <div class="col-md-4 mb-4">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title"><%= counselor.user.name %></h5>
+              <h6 class="card-subtitle mb-2 text-muted"><%= counselor.specialization %></h6>
+              <p class="card-text">
+                <%= counselor.bio.length > 100 ? counselor.bio.substring(0, 100) + '...' : counselor.bio %>
+              </p>
+              <ul class="list-group list-group-flush mb-3">
+                <li class="list-group-item">
+                  <strong>Available Days:</strong> <%= counselor.availableDays.join(', ') %>
+                </li>
+                <li class="list-group-item">
+                  <strong>Available Hours:</strong> <%= counselor.availableHours.join(', ') %>
+                </li>
+              </ul>
+              <% if (user && user.role === 'student') { %>
+                <a href="/appointments/book?counselor=<%= counselor._id %>" class="btn btn-primary mt-auto">Book Appointment</a>
+              <% } else { %>
+                <p class="text-muted mt-auto">Login as a student to book appointments.</p>
+              <% } %>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  <% } else { %>
+    <div class="alert alert-info text-center">No counselors available at the moment.</div>
+  <% } %>
+</div>
+
+<%- include('../partials/footer') %>

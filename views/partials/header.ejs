@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !== 'undefined' ? title : 'appointments' %></title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="/css/style.css" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="/">
+        <i class="fas fa-hands-helping me-2"></i>
+        <span>Appointment Booking System</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <% if (!user) { %>
+            <li class="nav-item">
+              <a class="nav-link <%= currentPath === '/auth/login' ? 'active' : '' %>" href="/auth/login">
+                <i class="fas fa-sign-in-alt me-1"></i> Login
+              </a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle <%= currentPath.startsWith('/auth/register') ? 'active' : '' %>" 
+                 href="#" id="registerDropdown" role="button" data-bs-toggle="dropdown">
+                <i class="fas fa-user-plus me-1"></i> Register
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/auth/register/student">As Student</a></li>
+                <li><a class="dropdown-item" href="/auth/register/counselor">As Counselor</a></li>
+              </ul>
+            </li>
+          <% } else { %>
+            <% if (user.role === 'student') { %>
+              <li class="nav-item">
+                <a class="nav-link <%= currentPath === '/appointments' ? 'active' : '' %>" href="/appointments">
+                  <i class="fas fa-calendar-check me-1"></i> My Appointments
+                </a>
+              </li>
+            <% } else if (user.role === 'counselor') { %>
+              <li class="nav-item">
+                <a class="nav-link <%= currentPath === '/counselors/dashboard' ? 'active' : '' %>" href="/counselors/dashboard">
+                  <i class="fas fa-tachometer-alt me-1"></i> Dashboard
+                </a>
+              </li>
+            <% } else if (user.role === 'admin') { %>
+              <li class="nav-item">
+                <a class="nav-link <%= currentPath === '/admin' ? 'active' : '' %>" href="/admin">
+                  <i class="fas fa-user-shield me-1"></i> Admin Panel
+                </a>
+              </li>
+            <% } %>
+
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                <i class="fas fa-user-circle me-1"></i> <%= user.name %>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><h6 class="dropdown-header text-uppercase"><%= user.role %></h6></li>
+                <li>
+                  <a class="dropdown-item" href="/profile">
+                    <i class="fas fa-user me-1"></i> Profile
+                  </a>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                  <a class="dropdown-item" href="/auth/logout">
+                    <i class="fas fa-sign-out-alt me-1"></i> Logout
+                  </a>
+                </li>
+              </ul>
+            </li>
+          <% } %>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <!-- <% if (success_msg) { %>
+      <div class="alert alert-success alert-dismissible fade show mt-3">
+        <i class="fas fa-check-circle me-2"></i><%= success_msg %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+    <% } %>
+
+    <% if (error_msg) { %>
+      <div class="alert alert-danger alert-dismissible fade show mt-3">
+        <i class="fas fa-exclamation-circle me-2"></i><%= error_msg %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+    <% } %> -->
+<% if (success_msg) { %>
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <%= success_msg %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% } %>
+
+<% if (error_msg) { %>
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <%= error_msg %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% } %>
+

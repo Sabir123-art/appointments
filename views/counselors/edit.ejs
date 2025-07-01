@@ -1,0 +1,91 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-5">
+  <% if (success_msg) { %>
+    <div class="alert alert-success"><%= success_msg %></div>
+  <% } %>
+  <% if (error_msg) { %>
+    <div class="alert alert-danger"><%= error_msg %></div>
+  <% } %>
+
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0">Edit Counselor Profile</h5>
+        </div>
+        <div class="card-body">
+          <form action="/counselors/edit" method="POST">
+            <div class="mb-3">
+              <label for="name" class="form-label">Full Name</label>
+              <input 
+                type="text" 
+                class="form-control" 
+                id="name" 
+                name="name" 
+                value="<%= counselor.user.name %>" 
+                required
+              >
+            </div>
+
+            <div class="mb-3">
+              <label for="specialization" class="form-label">Specialization</label>
+              <input 
+                type="text" 
+                class="form-control" 
+                id="specialization" 
+                name="specialization" 
+                value="<%= counselor.specialization %>" 
+                required
+              >
+            </div>
+
+            <div class="mb-3">
+              <label for="bio" class="form-label">Bio</label>
+              <textarea 
+                class="form-control" 
+                id="bio" 
+                name="bio" 
+                rows="3" 
+                required
+              ><%= counselor.bio %></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label for="availableDays" class="form-label">Available Days (comma-separated)</label>
+              <input 
+                type="text" 
+                class="form-control" 
+                id="availableDays" 
+                name="availableDays" 
+                value="<%= counselor.availableDays.join(', ') %>" 
+                required
+              >
+              <div class="form-text">Example: Monday, Wednesday, Friday</div>
+            </div>
+
+            <div class="mb-3">
+              <label for="availableHours" class="form-label">Available Hours (comma-separated)</label>
+              <input 
+                type="text" 
+                class="form-control" 
+                id="availableHours" 
+                name="availableHours" 
+                value="<%= counselor.availableHours.join(', ') %>" 
+                required
+              >
+              <div class="form-text">Example: 9:00 AM, 11:00 AM, 2:00 PM</div>
+            </div>
+
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-success">Update Profile</button>
+              <a href="/counselors/dashboard" class="btn btn-secondary">Cancel</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

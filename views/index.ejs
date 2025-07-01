@@ -1,0 +1,38 @@
+<%- include('partials/header') %>
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-10 mx-auto text-center">
+      <h1 class="display-4 mb-4"><i class="fas fa-hands-helping me-2 text-primary"></i>Welcome to the Counseling Appointment System</h1>
+      <p class="lead mb-4">Book appointments with counselors and manage your sessions easily and securely.</p>
+      
+      <% if (!user) { %>
+        <div class="mt-4">
+          <a href="/auth/register/student" class="btn btn-primary btn-lg me-3">
+            <i class="fas fa-user-graduate me-1"></i> Register as Student
+          </a>
+          <a href="/auth/register/counselor" class="btn btn-success btn-lg me-3">
+            <i class="fas fa-user-md me-1"></i> Register as Counselor
+          </a>
+          <a href="/auth/login" class="btn btn-outline-primary btn-lg">
+            <i class="fas fa-sign-in-alt me-1"></i> Login
+          </a>
+        </div>
+      <% } else { %>
+        <div class="mt-4">
+          <% if (user.role === 'student') { %>
+            <a href="/appointments" class="btn btn-primary btn-lg">
+              <i class="fas fa-calendar-check me-1"></i> View Your Appointments
+            </a>
+          <% } else if (user.role === 'counselor') { %>
+            <a href="/counselors/dashboard" class="btn btn-primary btn-lg">
+              <i class="fas fa-tachometer-alt me-1"></i> Go to Dashboard
+            </a>
+          <% } %>
+        </div>
+      <% } %>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

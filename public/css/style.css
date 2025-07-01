@@ -1,0 +1,132 @@
+:root {
+  --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --background-color: #f8f9fa;
+  --primary-color: #007bff;
+  --text-color-light: #ffffff;
+  --shadow-light: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-medium: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --border-radius: 10px;
+  --border-radius-sm: 5px;
+  --border-width-danger: 2px;
+  --text-color-black:#000;
+}
+
+/* Base styles */
+body {
+  font-family: var(--font-family);
+  background-color: var(--background-color);
+  margin: 0;
+  padding: 0;
+}
+
+/* Layout and spacing */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Navbar */
+.navbar {
+  box-shadow: var(--shadow-light);
+}
+
+.navbar-brand {
+  font-weight: bold;
+}
+
+.navbar-nav .nav-link.active {
+  font-weight: bold;
+  position: relative;
+}
+
+.navbar-nav .nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--text-color-light);
+}
+
+/* Cards */
+.card {
+  border: none;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-medium);
+  margin-bottom: 20px;
+}
+
+.card-header {
+  background-color: var(--primary-color);
+  color: var(--text-color-light);
+  border-radius: var(--border-radius) var(--border-radius) 0 0 !important;
+}
+
+/* Form controls */
+.form-control {
+  border-radius: var(--border-radius-sm);
+}
+
+.btn {
+  border-radius: var(--border-radius-sm);
+}
+
+/* Dashboard interactivity */
+.dashboard-card {
+  transition: transform 0.3s ease-in-out;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Alerts */
+.alert {
+  color: var(--text-color-black);
+  font-weight: 500;
+  transition: opacity 0.15s linear;
+}
+
+.alert.fade {
+  opacity: 0;
+}
+
+/* Dangerous card border */
+.card.border-danger {
+  border-width: var(--border-width-danger);
+}
+
+/* Code formatting */
+pre {
+  background-color: var(--background-color);
+  padding: 15px;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+/* Tables */
+.table-responsive {
+  overflow-x: auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .navbar-nav {
+    margin-top: 10px;
+  }
+
+  .navbar-nav .nav-link.active::after {
+    display: none;
+  }
+
+  .card {
+    margin-bottom: 15px;
+  }
+
+  .btn-block {
+    display: block;
+    width: 100%;
+  }
+}

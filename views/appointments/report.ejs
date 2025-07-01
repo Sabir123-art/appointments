@@ -1,0 +1,42 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-5">
+  <h2>Students with Multiple Counselors in the Same Month</h2>
+  
+  <% if (reports && reports.length > 0) { %>
+    <div class="table-responsive mt-4">
+      <table class="table table-striped align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>Student Name</th>
+            <th>Email</th>
+            <th>Month</th>
+            <th>Year</th>
+            <th># Counselors</th>
+            <th># Appointments</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% reports.forEach(report => { 
+               const user = report.student;
+          %>
+            <tr>
+              <td><%= user?.name || 'N/A' %></td>
+              <td><%= user?.email || 'N/A' %></td>
+              <td><%= monthNames[report.month - 1] %></td>
+              <td><%= report.year %></td>
+              <td><%= report.counselor_count %></td>
+              <td><%= report.appointment_count %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  <% } else { %>
+    <div class="alert alert-info mt-4">No students found with multiple counselors in the same month.</div>
+  <% } %>
+
+  <a href="/counselors/dashboard" class="btn btn-secondary mt-3">Back to Dashboard</a>
+</div>
+
+<%- include('../partials/footer') %>

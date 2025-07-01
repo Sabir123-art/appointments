@@ -1,0 +1,84 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-5">
+   <div class="row">
+    <!-- Profile Section -->
+    <div class="col-md-4 mb-4">
+      <div class="card shadow-sm dashboard-card">
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0">My Profile</h5>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title"><%= counselor.user.name %></h5>
+          <p><strong>Email:</strong> <%= counselor.user.email %></p>
+          <p><strong>Specialization:</strong> <%= counselor.specialization %></p>
+          <p><strong>Bio:</strong> <%= counselor.bio %></p>
+          <p><strong>Available Days:</strong> <%= counselor.availableDays.join(', ') %></p>
+          <p><strong>Available Hours:</strong> <%= counselor.availableHours.join(', ') %></p>
+          <a href="/counselors/edit" class="btn btn-outline-primary mt-2">Edit Profile</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Appointments Section -->
+    <div class="col-md-8">
+      <div class="card shadow-sm dashboard-card">
+        <div class="card-header d-flex justify-content-between align-items-center bg-secondary text-white">
+          <h5 class="mb-0">My Appointments</h5>
+          <a href="/appointments/report" class="btn btn-sm btn-light">Multi-Counselor Report</a>
+        </div>
+        <div class="card-body">
+          <% if (appointments.length > 0) { %>
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover align-middle">
+                <thead class="table-light">
+                  <tr>
+                    <th>Student</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                    <th class="text-center">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% appointments.forEach(appointment => { %>
+                    <tr>
+                      <td><%= appointment.student_id.user.name %></td>
+                      <td><%= appointment.date.toLocaleDateString() %></td>
+                      <td><%= appointment.date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) %></td>
+                      <td>
+                        <span class="badge bg-<%= 
+                          appointment.status === 'confirmed' ? 'success' :
+                          appointment.status === 'pending' ? 'warning' :
+                          appointment.status === 'cancelled' ? 'danger' : 'secondary' 
+                        %> text-capitalize">
+                          <%= appointment.status %>
+                        </span>
+                      </td>
+                      <td class="text-center">
+                        <% if (appointment.status === 'pending') { %>
+                          <form action="/appointments/<%= appointment._id %>/confirm" method="POST" class="d-inline">
+                            <button type="submit" class="btn btn-sm btn-success">Confirm</button>
+                          </form>
+                        <% } %>
+                        <% if (appointment.status !== 'cancelled') { %>
+                          <form action="/appointments/<%= appointment._id %>/cancel" method="POST" class="d-inline">
+                            <button type="submit" class="btn btn-sm btn-danger">Cancel</button>
+                          </form>
+                        <% } %>
+                      </td>
+                    </tr>
+                  <% }) %>
+                </tbody>
+              </table>
+            </div>
+          <% } else { %>
+            <div class="alert alert-info text-center">No appointments scheduled yet.</div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
